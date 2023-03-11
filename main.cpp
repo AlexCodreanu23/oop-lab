@@ -142,9 +142,10 @@ int main() {
     /*
     b.setTitle("FOTBAL");
     b.setAuthor("Mihai Eminescu");
-    b.setCode(2345);
-    */
-    const Book b1("Pomo","MARIUS CSAMPAR",23456);
+    b.setCode(2345);   */
+
+    const Book b1("Comedie","alex",23456);
+
     b1.details();
     Book b2=b1;
     b2.details();
