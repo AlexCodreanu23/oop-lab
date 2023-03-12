@@ -153,10 +153,11 @@ int main() {
         std::cout<<"da"<<'\n';
     if(b1!=b2)
         std::cout<<"nu"<<'\n';
+    /*
     Book b3;
     std::cin>>b3;
     std::cout<<b3;
-
+    */
     int n;
     std::cout<<"Introduceti numarul cartilor pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
