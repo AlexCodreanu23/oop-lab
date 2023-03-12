@@ -132,7 +132,7 @@ void meniu() {
         }
     else
     {
-        std::cout << "Optiune invalida";
+        std::cout << "Optiune invalida"<<std::endl;
         meniu();
     }
 }
