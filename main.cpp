@@ -92,8 +92,9 @@ public:
     }
 
 };
+Book b[100];
 int nr1;
-void meniu(b) {
+void meniu() {
     int choice = 0;
     int nr = -1;
     std::cout << "Meniu" << std::endl;
@@ -112,14 +113,14 @@ void meniu(b) {
             std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
             std::cin >> b[i];
         }
-        meniu(b);
+        meniu();
     }
 }
     else if (choice == 2) {
         if(nr1>0) {
             for (int i = 1; i <= nr1; i++)
                 std::cout << b[i];
-            meniu(b);
+            meniu();
         }
         else{
             std::cout<<"Nu exista carti de vizualizat";
@@ -132,7 +133,7 @@ void meniu(b) {
     else
     {
         std::cout << "Optiune invalida"<<std::endl;
-        meniu(b);
+        meniu();
     }
 }
 
@@ -172,6 +173,6 @@ int main() {
     else
         std::cout<<"Nu a fost adaugata nicio carte"<<std::endl;
 
-    meniu(b);
+    meniu();
     return 0;
 }
