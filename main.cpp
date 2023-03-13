@@ -90,6 +90,19 @@ public:
     bool operator!=(const Book &rhs) const{
          return !(strcmp(title,rhs.title)==0 && strcmp(author,rhs.author)==0 && code==rhs.code);
     }
+    
+    Book& operator=(const Book &rhs) {
+        std::cout << "Apel operator=\n";
+
+        if (this != &rhs)
+            setTitle(rhs.title);
+        
+        if(this != &rhs)
+            setAuthor(rhs.author);
+        this->code = rhs.code;
+
+        return *this; 
+    }
 
 };
 Book b[100];
