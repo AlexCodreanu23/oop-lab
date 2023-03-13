@@ -95,12 +95,11 @@ public:
         std::cout << "Apel operator=\n";
 
         if (this != &rhs)
+        {
             setTitle(rhs.title);
-        
-        if(this != &rhs)
             setAuthor(rhs.author);
-        this->code = rhs.code;
-
+            code = rhs.code;
+        }
         return *this; 
     }
 
