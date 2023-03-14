@@ -48,9 +48,6 @@ public:
         author= new char[ len+1];
         strcpy(author, author_);
     }
-    int setCode(int code_){
-        code=code_;
-    }
 
     Book(const Book &bk){
         size_t len= strlen(bk.title);
