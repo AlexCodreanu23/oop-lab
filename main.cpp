@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-int n;
+
 class Book{
 private:
     char* title;
@@ -103,7 +103,7 @@ public:
 
 };
 int nr1;
-void meniu (Book *b) {
+void meniu (Book *b,int n) {
     int choice = 0;
     std::cout << "Meniu" << std::endl;
     std::cout << "1.Adauga carti" << std::endl;
@@ -118,22 +118,27 @@ void meniu (Book *b) {
         std::cin >> nr;
         if (nr > 0) {
             Book *temp=new Book[n+nr];
-            for(int i=0;i<n;i++)
-                temp[i]=b[i];
+            for(int i=0;i<n;i++) { temp[i] = b[i];
+            }
             for (int i=n; i < n+nr; i++) {
-                std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
+                std::cout << "Introduceti titlul, autorul si codul cartii " << i+1 << std::endl;
                 std::cin >> temp[i];
             }
+
             b=temp;
+
+
+
             n+=nr;
-            meniu(b);
+            delete[] temp;
+            meniu(b,n);
         }
     }
     else if (choice == 2) {
         if(n>0) {
             for (int i = 0; i < n; i++)
                 std::cout <<b[i];
-            meniu(b);
+            meniu(b,n);
         }
         else{
             std::cout<<"Nu exista carti de vizualizat";
@@ -141,18 +146,19 @@ void meniu (Book *b) {
     }
     else if(choice==3) {
         std::cout << "La revedere!";
+
         return;
     }
     else
     {
         std::cout << "Optiune invalida"<<std::endl;
-        meniu(b);
+        meniu(b,n);
     }
 }
 
 
 int main() {
-
+    int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
     Book *b=new Book[n];
@@ -171,6 +177,8 @@ int main() {
     else
         std::cout<<"Nu a fost adaugata nicio carte"<<std::endl;
 
-    meniu(b);
+    meniu(b,n);
+
+   delete[] b;
     return 0;
 }
