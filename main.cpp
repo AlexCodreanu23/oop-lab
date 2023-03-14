@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-
+int n;
 class Book{
 private:
     char* title;
@@ -92,8 +92,6 @@ public:
     }
 
     Book& operator=(const Book &rhs) {
-        std::cout << "Apel operator=\n";
-
         if (this != &rhs)
         {
             setTitle(rhs.title);
@@ -107,7 +105,6 @@ public:
 int nr1;
 void meniu (Book *b) {
     int choice = 0;
-    int nr = -1;
     std::cout << "Meniu" << std::endl;
     std::cout << "1.Adauga carti" << std::endl;
     std::cout << "2.Vizualizeaza carti" << std::endl;
@@ -116,21 +113,27 @@ void meniu (Book *b) {
     std::cin >> choice;
     if (choice == 1)
     {
+        int nr;
         std::cout << "Cate carti doresti sa adaugi?";
         std::cin >> nr;
-        nr1=nr;
         if (nr > 0) {
-            for (int i = 1; i <= nr; i++) {
+            Book *temp=new Book[n+nr];
+            for(int i=0;i<n;i++)
+                temp[i]=b[i];
+            for (int i=n; i < n+nr; i++) {
                 std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
-                std::cin >> b[i];
+                std::cin >> temp[i];
             }
+            delete[] b;
+            b=temp;
+            n+=nr;
             meniu(b);
         }
     }
     else if (choice == 2) {
-        if(nr1>0) {
-            for (int i = 1; i <= nr1; i++)
-                std::cout << b[i];
+        if(n>0) {
+            for (int i = 0; i < n; i++)
+                std::cout <<b[i];
             meniu(b);
         }
         else{
@@ -150,21 +153,7 @@ void meniu (Book *b) {
 
 
 int main() {
-    /*
-     const Book b1("Comedie","alex",23456);
-     b1.details();
-     Book b2=b1;
-     b2.details();
-     if(b1==b2)
-         std::cout<<"da"<<'\n';
-     if(b1!=b2)
-         std::cout<<"nu"<<'\n';
 
-     Book b3;
-     std::cin>>b3;
-     std::cout<<b3;
-     */
-    int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
     Book *b=new Book[n];
@@ -184,5 +173,6 @@ int main() {
         std::cout<<"Nu a fost adaugata nicio carte"<<std::endl;
 
     meniu(b);
+    delete[] b;
     return 0;
 }
