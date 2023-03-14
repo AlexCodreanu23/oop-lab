@@ -124,7 +124,6 @@ void meniu (Book *b) {
                 std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
                 std::cin >> temp[i];
             }
-            delete[] b;
             b=temp;
             n+=nr;
             meniu(b);
@@ -173,6 +172,5 @@ int main() {
         std::cout<<"Nu a fost adaugata nicio carte"<<std::endl;
 
     meniu(b);
-    delete[] b;
     return 0;
 }
