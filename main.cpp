@@ -8,12 +8,12 @@ private:
     int code;
 
 public:
-     Book(){}
+    Book(){}
 
-     char *getTitle()const{
+    char *getTitle()const{
         return title;
     }
-     char *getAuthor()const{
+    char *getAuthor()const{
         return author;
     }
     int getCode() const{
@@ -48,6 +48,9 @@ public:
         author= new char[ len+1];
         strcpy(author, author_);
     }
+    int setCode(int code_){
+        code=code_;
+    }
 
     Book(const Book &bk){
         size_t len= strlen(bk.title);
@@ -67,7 +70,7 @@ public:
         }
         os <<"Titlul cartii: " <<b.title<<std::endl<<"Numele autorului: " << b.author<<std::endl << "Codul cartii: "<<b.code<<std::endl;
         return os;
-     }
+    }
 
     friend std::istream& operator>>(std::istream &is, Book &b) {
         char buf[100];
@@ -88,9 +91,9 @@ public:
     }
 
     bool operator!=(const Book &rhs) const{
-         return !(strcmp(title,rhs.title)==0 && strcmp(author,rhs.author)==0 && code==rhs.code);
+        return !(strcmp(title,rhs.title)==0 && strcmp(author,rhs.author)==0 && code==rhs.code);
     }
-    
+
     Book& operator=(const Book &rhs) {
         std::cout << "Apel operator=\n";
 
@@ -100,13 +103,12 @@ public:
             setAuthor(rhs.author);
             code = rhs.code;
         }
-        return *this; 
+        return *this;
     }
 
 };
-Book b[100];
 int nr1;
-void meniu() {
+void meniu (Book *b) {
     int choice = 0;
     int nr = -1;
     std::cout << "Meniu" << std::endl;
@@ -118,54 +120,53 @@ void meniu() {
     if (choice == 1)
     {
         std::cout << "Cate carti doresti sa adaugi?";
-    std::cin >> nr;
-    nr1=nr;
-    if (nr > 0) {
-        for (int i = 1; i <= nr; i++) {
-            std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
-            std::cin >> b[i];
+        std::cin >> nr;
+        nr1=nr;
+        if (nr > 0) {
+            for (int i = 1; i <= nr; i++) {
+                std::cout << "Introduceti titlul, autorul si codul cartii " << i << std::endl;
+                std::cin >> b[i];
+            }
+            meniu(b);
         }
-        meniu();
     }
-}
     else if (choice == 2) {
         if(nr1>0) {
             for (int i = 1; i <= nr1; i++)
                 std::cout << b[i];
-            meniu();
+            meniu(b);
         }
         else{
             std::cout<<"Nu exista carti de vizualizat";
         }
     }
     else if(choice==3) {
-            std::cout << "La revedere!";
-            return;
-        }
+        std::cout << "La revedere!";
+        return;
+    }
     else
     {
         std::cout << "Optiune invalida"<<std::endl;
-        meniu();
+        meniu(b);
     }
 }
 
 
 int main() {
-   /*
-    const Book b1("Comedie","alex",23456);
+    /*
+     const Book b1("Comedie","alex",23456);
+     b1.details();
+     Book b2=b1;
+     b2.details();
+     if(b1==b2)
+         std::cout<<"da"<<'\n';
+     if(b1!=b2)
+         std::cout<<"nu"<<'\n';
 
-    b1.details();
-    Book b2=b1;
-    b2.details();
-    if(b1==b2)
-        std::cout<<"da"<<'\n';
-    if(b1!=b2)
-        std::cout<<"nu"<<'\n';
-    
-    Book b3;
-    std::cin>>b3;
-    std::cout<<b3;
-    */
+     Book b3;
+     std::cin>>b3;
+     std::cout<<b3;
+     */
     int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
@@ -185,6 +186,6 @@ int main() {
     else
         std::cout<<"Nu a fost adaugata nicio carte"<<std::endl;
 
-    meniu();
+    meniu(b);
     return 0;
 }
