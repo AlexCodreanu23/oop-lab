@@ -1,12 +1,8 @@
-John
-Paul
-111
-mihai
-22
 0
 1
 1
-edi
-edi
-123
+John
+John
+111
+2
 3
