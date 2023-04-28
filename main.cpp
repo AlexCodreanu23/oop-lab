@@ -2,8 +2,8 @@
 #include "Book.h"
 #include "Fictional.h"
 #include "NonFiction.h"
-
-void meniu (Book *&b,int &n) {
+#include <vector>
+void meniu (std::vector<Book> &b,int &n) {
     int choice = 0;
     std::cout << "Meniu" << std::endl;
     std::cout << "1.Adauga carti" << std::endl;
@@ -17,24 +17,23 @@ void meniu (Book *&b,int &n) {
         std::cout << "Cate carti doresti sa adaugi?";
         std::cin >> nr;
         if (nr > 0) {
-            Book *temp=new Book[n+nr];
+            std::vector<Book> temp=std::vector<Book>(n+nr);
             for(int i=0;i<n;i++) { temp[i] = b[i];
             }
             for (int i=n; i < n+nr; i++) {
                 std::cout << "Introduceti titlul, autorul si codul cartii " << i+1 << std::endl;
                 std::cin >> temp[i];
             }
-
-            delete[]b;
-            b=temp;
             n+=nr;
+            b=temp;
             meniu(b,n);
         }
     }
     else if (choice == 2) {
-        if(n>0) {
-            for (int i = 0; i < n; i++)
-                std::cout <<b[i];
+        if(b.size()>0){
+            for(Book book : b){
+                std::cout<<book;
+            }
             meniu(b,n);
         }
         else{
@@ -43,7 +42,6 @@ void meniu (Book *&b,int &n) {
     }
     else if(choice==3) {
         std::cout << "La revedere!";
-        delete[]b;
         return;
     }
     else
@@ -52,8 +50,6 @@ void meniu (Book *&b,int &n) {
         meniu(b,n);
     }
 }
-
-
 int main() {
 
     NonFiction f7;
@@ -76,11 +72,14 @@ int main() {
     int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
-    Book *b=new Book[n];
+    std::vector<Book> b;
 
     for(int i = 0; i < n; i++) {
         std::cout << "Introduceti titlul, autorul si codul pentru cartea " << i+1 << std::endl;
-        std::cin >> b[i];
+        Book entry ;
+        std::cin >> entry;
+        b.push_back(entry);
+
     }
 
     if (n!=0) {
@@ -94,6 +93,6 @@ int main() {
 
     meniu(b,n);
 
-    delete[] b;
+
     return 0;
 }
