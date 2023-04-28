@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Book.h"
 #include "Fictional.h"
+#include "NonFiction.h"
 
 void meniu (Book *&b,int &n) {
     int choice = 0;
@@ -55,13 +56,22 @@ void meniu (Book *&b,int &n) {
 
 int main() {
 
-    Fictional f;
-    std::cin>>f;
-    std::cout<<f;
-    f.details();
+    NonFiction f7;
+    std::cin>>f7;
+    std::cout<<f7;
+    f7.details();
+
+//    Book *b2 = new NonFiction("The Lord of the Rings", 123, "J.R.R. Tolkien",  "Fantasy",1178);
+//
+//    NonFiction &nf1 = dynamic_cast<NonFiction&>(*b2);
+//    b2->details();
+//    delete b2;                     << dynamic_cast >>
+
+
+
 //    Book *b9 = new Fictional("The Lord of the Rings", 123, "J.R.R. Tolkien", 1178, "Fantasy");
 //    b9->details();
-//    delete b9;
+//    delete b9;             <<  funcții virtuale (pure) apelate prin pointeri de clasa bază  >>
 
     int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;

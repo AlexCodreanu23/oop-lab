@@ -29,7 +29,7 @@ public:
     static int getFictionalBooks();
 
      void details() const override ;
-    virtual ~Fictional() override;
+    ~Fictional() override;
 
     friend std::istream& operator>>(std::istream &is, Fictional &f);
     friend std::ostream& operator<<(std::ostream& os,Fictional& f);
