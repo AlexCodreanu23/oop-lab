@@ -12,6 +12,10 @@ private:
     int publication_year;
 public:
 
+    static void printClassName() {
+        std::cout << "This is the NonFiction class." << std::endl;
+    }
+    
     NonFiction();
     NonFiction(const char *title, int code,const char *author,const char *subject, int publication_year);
 
