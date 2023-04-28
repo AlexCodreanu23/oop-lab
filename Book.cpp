@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstring>
 #include "Book.h"
+#include "NoTitleException.h"
+#include "InvalidCodeException.h"
+
 
 
 Book::Book(){
@@ -9,6 +12,7 @@ Book::Book(){
 Book::Book(const char *author_, int code,const char *title_) : code(code) {
     author = strdup(author_);
     title = strdup (title_);
+
 }
 
 Book::Book(const Book &bk) {
@@ -28,13 +32,24 @@ int Book::getCode() const {
 }
 
 void Book::setCode(int code) {
-    Book::code = code;
+        if (code < 0) {
+            throw InvalidCodeException();
+        }
+        Book::code = code;
 }
 
 void Book::setTitle(const char *title) {
-    Book::title = strdup(title);
-}
+    try { if(title== nullptr||strlen(title)==0)
+        throw NoTitleException();
+        else
+            Book::title = strdup(title);
+    }
+    catch (const NoTitleException &e) {
+        std::cout << e.what() << '\n';
+    }
 
+
+}
 const char *Book::getTitle() const {
     return title;
 }
@@ -83,6 +98,7 @@ std::istream& operator>>(std::istream &is, Book &b) {
     is >> b.code;
     return is;
 }
+
 
 std::ostream& operator<<(std::ostream &os, Book &b) {
     if(!b.title){

@@ -12,16 +12,27 @@ NonFiction::NonFiction() : Book("", 0, "") {
 
 
 NonFiction::NonFiction(const char *title_, int code, const char *author_, const char *subject_, int publication_year):Book(title_, code, author_),code(code), publication_year(publication_year) {
-    title = strdup(title_);
-    author = strdup(author_);
-    subject = strdup(subject_);
+    title = std::make_unique<char[]>(std::strlen(title_) + 1);
+    std::strcpy(title.get(), title_);
+
+    author = std::make_unique<char[]>(std::strlen(author_) + 1);
+    std::strcpy(author.get(), author_);
+
+    subject = std::make_unique<char[]>(std::strlen(subject_) + 1);
+    std::strcpy(subject.get(), subject_);
 }
 
 
-NonFiction::NonFiction(const NonFiction& nf) : Book(nf.title, nf.code, nf.author), publication_year(nf.publication_year), code(nf.code) {
-    title = strdup(nf.title);
-    author = strdup(nf.author);
-    subject = strdup(nf.subject);
+
+NonFiction::NonFiction(const NonFiction& nf) : Book(nf.title.get(), nf.code, nf.author.get()), publication_year(nf.publication_year), code(nf.code) {
+    title = std::make_unique<char[]>(std::strlen(nf.title.get()) + 1);
+    std::strcpy(title.get(), nf.title.get());
+
+    author = std::make_unique<char[]>(std::strlen(nf.author.get()) + 1);
+    std::strcpy(author.get(), nf.author.get());
+
+    subject = std::make_unique<char[]>(std::strlen(nf.subject.get()) + 1);
+    std::strcpy(subject.get(), nf.subject.get());
 }
 
 int NonFiction::getPublication_year() const {
@@ -32,20 +43,18 @@ void NonFiction::setPublication_year(int publication_year) {
     NonFiction::publication_year = publication_year;
 }
 
-char *NonFiction::getSubject() const {
-    return subject;
+char* NonFiction::getSubject() const {
+    return subject.get();
 }
 
 void NonFiction::setSubject(const char *subject) {
-    delete[] this->subject;
-    this->subject = strdup(subject);
+    this->subject = std::make_unique<char[]>(std::strlen(subject) + 1);
+    std::strcpy(this->subject.get(), subject);
 }
 
 
 NonFiction::~NonFiction(){
-    delete[]title;
-    delete[]author;
-    delete[]subject;
+
 }
 
 
@@ -59,12 +68,13 @@ std::istream& operator>>(std::istream &is, NonFiction &nf) {
     nf.setPublication_year(publication_year);
 }
 
-std::ostream &operator<<(std::ostream &os, NonFiction &nf) {
-        os << static_cast<Book &>(nf);
-        os << "The subject is: " << nf.getSubject() << std::endl;
-        os << "The publication year is: " << nf.getPublication_year() << std::endl;
 
-        return os;
+std::ostream &operator<<(std::ostream &os, NonFiction &nf) {
+    os << static_cast<Book &>(nf);
+    os << "The subject is: " << nf.getSubject() << std::endl;
+    os << "The publication year is: " << nf.getPublication_year() << std::endl;
+
+    return os;
 }
 
 
@@ -76,13 +86,14 @@ NonFiction& NonFiction::operator=(const NonFiction& nf) {
     Book::operator=(nf);
     publication_year = nf.publication_year;
 
-    delete[]title;
-    delete[]author;
-    delete[]subject;
+    title.reset(new char[std::strlen(nf.title.get()) + 1]);
+    std::strcpy(title.get(), nf.title.get());
 
-    title = strdup(nf.title);
-    author = strdup(nf.author);
-    subject = strdup(nf.subject);
+    author.reset(new char[std::strlen(nf.author.get()) + 1]);
+    std::strcpy(author.get(), nf.author.get());
+
+    subject.reset(new char[std::strlen(nf.subject.get()) + 1]);
+    std::strcpy(subject.get(), nf.subject.get());
 
     return *this;
 }

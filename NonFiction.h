@@ -1,13 +1,14 @@
 #ifndef _NonFICTION_H_
 #define _NonFICTION_H_
+#include <memory>
 #include  "book.h"
 
 class NonFiction:public Book {
 private:
     int code;
-    char *title;
-    char *author;
-    char *subject;
+    std::unique_ptr<char[]> title;
+    std::unique_ptr<char[]> author;
+    std::unique_ptr<char[]> subject;
     int publication_year;
 public:
 

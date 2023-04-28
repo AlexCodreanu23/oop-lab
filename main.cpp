@@ -2,6 +2,7 @@
 #include "Book.h"
 #include "Fictional.h"
 #include "NonFiction.h"
+#include "InvalidCodeException.h"
 #include <vector>
 void meniu (std::vector<Book> &b,int &n) {
     int choice = 0;
