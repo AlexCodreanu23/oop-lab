@@ -1,113 +1,8 @@
 #include <iostream>
-#include <cstring>
+#include "Book.h"
+#include "Fictional.h"
 
-class Book{
-private:
-    char* title;
-    char* author;
-    int code;
-
-public:
-    Book(){}
-
-    char *getTitle()const{
-        return title;
-    }
-    char *getAuthor()const{
-        return author;
-    }
-    int getCode() const{
-        return code;
-    }
-    void details()const{
-        std::cout<<"The book "<<title<<" was written by "<<author<<" and has the code "<<code<<'\n';
-    }
-    Book(const char* title_,const char* author_, int code_) {
-        size_t len = strlen(title_);
-        title= new char[len+1];
-        strcpy(title,title_);
-
-        size_t len2=strlen(author_);
-        author=new char[len2+1];
-        strcpy(author,author_);
-
-        code= code_;
-    }
-    ~Book(){
-        delete[] title;
-        delete[] author;
-    }
-
-    void setTitle(const char* title_){
-        size_t len= strlen(title_);
-        title= new char[ len+1];
-        strcpy(title, title_);
-    }
-    void setAuthor(const char* author_){
-        size_t len= strlen(author_);
-        author= new char[ len+1];
-        strcpy(author, author_);
-    }
-    
-    void setCode(int code_) {
-        code = code_;
-    }
-
-    Book(const Book &bk){
-        size_t len= strlen(bk.title);
-        title= new char[len+1];
-        strcpy(title, bk.title);
-
-        size_t len2=strlen(bk.author);
-        author=new char[len2+1];
-        strcpy(author, bk.author);
-
-        code=bk.code;
-    }
-    friend std::ostream& operator<<(std::ostream &os, Book &b) {
-        if(!b.title){
-            os<<"Cartea nu a fost initializata";
-            return os;
-        }
-        os <<"Titlul cartii: " <<b.title<<std::endl<<"Numele autorului: " << b.author<<std::endl << "Codul cartii: "<<b.code<<std::endl;
-        return os;
-    }
-
-    friend std::istream& operator>>(std::istream &is, Book &b) {
-        char buf[100];
-        is >> buf;
-        b.setTitle(buf);
-
-        char buf2[100];
-        is >> buf2;
-        b.setAuthor(buf2);
-
-        is >> b.code;
-        return is;
-    }
-
-
-    bool operator==(const Book &rhs) const{
-        return strcmp(title,rhs.title)==0 && strcmp(author,rhs.author)==0 && code==rhs.code ;
-    }
-
-    bool operator!=(const Book &rhs) const{
-        return !(strcmp(title,rhs.title)==0 && strcmp(author,rhs.author)==0 && code==rhs.code);
-    }
-
-    Book& operator=(const Book &rhs) {
-        if (this != &rhs)
-        {
-            setTitle(rhs.title);
-            setAuthor(rhs.author);
-            code = rhs.code;
-        }
-        return *this;
-    }
-
-};
-int nr1;
-void meniu (Book *b,int n) {
+void meniu (Book *&b,int &n) {
     int choice = 0;
     std::cout << "Meniu" << std::endl;
     std::cout << "1.Adauga carti" << std::endl;
@@ -129,12 +24,9 @@ void meniu (Book *b,int n) {
                 std::cin >> temp[i];
             }
 
+            delete[]b;
             b=temp;
-
-
-
             n+=nr;
-            delete[] temp;
             meniu(b,n);
         }
     }
@@ -150,7 +42,7 @@ void meniu (Book *b,int n) {
     }
     else if(choice==3) {
         std::cout << "La revedere!";
-
+        delete[]b;
         return;
     }
     else
@@ -162,6 +54,15 @@ void meniu (Book *b,int n) {
 
 
 int main() {
+
+    Fictional f;
+    std::cin>>f;
+    std::cout<<f;
+    f.details();
+//    Book *b9 = new Fictional("The Lord of the Rings", 123, "J.R.R. Tolkien", 1178, "Fantasy");
+//    b9->details();
+//    delete b9;
+
     int n;
     std::cout<<"Introduceti numarul de carti pe care vreti sa le adaugati: "<<std::endl;
     std::cin>>n;
@@ -183,6 +84,6 @@ int main() {
 
     meniu(b,n);
 
-   delete[] b;
+    delete[] b;
     return 0;
 }
